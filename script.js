@@ -4,18 +4,17 @@ const input = document.getElementById('task-input');
 const addBtn = document.getElementById('add-btn');
 const list = document.getElementById('task-list');
 
-addBtn.addEventListener('click', () => {
-  const text = input.value.trim();
+function $(sel) { return document.querySelector(sel); }
+function $all(sel) { return Array.from(document.querySelectorAll(sel)); }
 
-  if (!text) {
-    alert('Cannot add an empty task')
-    return;
-  }
-
+// Add task
+$(refs.addBtn).addEventListener('click', () => {
+  const text = $(refs.input).value.trim();
+  if (!text) return alert('Cannot add an empty task');
   const li = document.createElement('li');
   li.textContent = text;
-  list.appendChild(li);
-  input.value = '';
+  $(refs.list).appendChild(li);
+  $(refs.input).value = '';
 });
 
 // Toggle complete
