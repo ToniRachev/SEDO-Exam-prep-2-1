@@ -37,9 +37,9 @@ $(refs.list).addEventListener('dblclick', e => {
   }
 });
 
-// Clear all completed tasks
-const clearBtn = document.getElementById('clear-completed-btn');
-clearBtn.addEventListener('click', () => {
-  document.querySelectorAll('#task-list li.completed')
-    .forEach(li => li.remove());
-});
+// Clear completed
+if ($(refs.clearBtn)) {
+  $(refs.clearBtn).addEventListener('click', () => {
+    $all(`${refs.list} li.completed`).forEach(li => li.remove());
+  });
+}
