@@ -24,8 +24,14 @@ list.addEventListener('click', e => {
   }
 });
 
-// Delete on double-click
-list.addEventListener('dblclick', e => {
+// Delegate toggles & deletes
+$(refs.list).addEventListener('click', e => {
+  if (e.target.tagName === 'LI') {
+    e.target.classList.toggle('completed');
+  }
+});
+
+$(refs.list).addEventListener('dblclick', e => {
   if (e.target.tagName === 'LI') {
     e.target.remove();
   }
