@@ -4,18 +4,18 @@ const input = document.getElementById('task-input');
 const addBtn = document.getElementById('add-btn');
 const list = document.getElementById('task-list');
 
-addBtn.addEventListener('click', () => {
-  const text = input.value.trim();
+function $(sel) { return document.querySelector(sel); }
+function $all(sel) { return Array.from(document.querySelectorAll(sel)); }
 
-  if (!text) {
-    alert('Cannot add an empty task')
-    return;
-  }
+// Add task
+$(refs.addBtn).addEventListener('click', () => {
+  const text = $(refs.input).value.trim();
+  if (!text) return alert('Cannot add an empty task');
 
   const li = document.createElement('li');
   li.textContent = text;
-  list.appendChild(li);
-  input.value = '';
+  $(refs.list).appendChild(li);
+  $(refs.input).value = '';
 });
 
 // Toggle complete
@@ -25,16 +25,23 @@ list.addEventListener('click', e => {
   }
 });
 
-// Delete on double-click
-list.addEventListener('dblclick', e => {
+// Delegate toggles & deletes
+$(refs.list).addEventListener('click', e => {
+  if (e.target.tagName === 'LI') {
+    e.target.classList.toggle('completed');
+  }
+});
+
+$(refs.list).addEventListener('dblclick', e => {
   if (e.target.tagName === 'LI') {
     e.target.remove();
   }
 });
 
-// Clear all completed tasks
-const clearBtn = document.getElementById('clear-completed-btn');
-clearBtn.addEventListener('click', () => {
-  document.querySelectorAll('#task-list li.completed')
-    .forEach(li => li.remove());
-});
+
+// Clear completed
+if ($(refs.clearBtn)) {
+  $(refs.clearBtn).addEventListener('click', () => {
+    $all(`${refs.list} li.completed`).forEach(li => li.remove());
+  });
+}
